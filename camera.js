@@ -31,7 +31,7 @@
 		
 		imagePath			: 'images/',	//he path to the image folder (it serves for the blank.gif, when you want to display videos)
 		
-		hover				: true,	//true, false. Puase on state hover. Not available for mobile devices
+		hover				: false,	//true, false. Puase on state hover. Not available for mobile devices
 				
 		loader				: 'pie',	//pie, bar, none (even if you choose "pie", old browsers like IE8- can't display it... they will display always a loading bar)
 		
@@ -61,7 +61,7 @@
 		
 		playPause			: true,	//true or false, to display or not the play/pause buttons
 		
-		pauseOnClick		: true,	//true, false. It stops the slideshow when you click the sliders.
+		pauseOnClick		: false,	//true, false. It stops the slideshow when you click the sliders.
 		
 		pieDiameter			: 38,
 		
