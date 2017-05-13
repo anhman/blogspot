@@ -1,4 +1,4 @@
-// Camera slideshow v1.3.4 - a jQuery slideshow with many effects, transitions, easy to customize, using canvas and mobile ready, based on jQuery 1.4+
+// Camera slideshow v1.3.3 - a jQuery slideshow with many effects, transitions, easy to customize, using canvas and mobile ready, based on jQuery 1.4+
 // Copyright (c) 2012 by Manuel Masia - www.pixedelic.com
 // Licensed under the MIT license: http://www.opensource.org/licenses/mit-license.php
 ;(function($){$.fn.camera = function(opts, callback) {
@@ -31,7 +31,7 @@
 		
 		imagePath			: 'images/',	//he path to the image folder (it serves for the blank.gif, when you want to display videos)
 		
-		hover				: false,	//true, false. Puase on state hover. Not available for mobile devices
+		hover				: true,	//true, false. Puase on state hover. Not available for mobile devices
 				
 		loader				: 'pie',	//pie, bar, none (even if you choose "pie", old browsers like IE8- can't display it... they will display always a loading bar)
 		
@@ -61,7 +61,7 @@
 		
 		playPause			: true,	//true or false, to display or not the play/pause buttons
 		
-		pauseOnClick		: false,	//true, false. It stops the slideshow when you click the sliders.
+		pauseOnClick		: true,	//true, false. It stops the slideshow when you click the sliders.
 		
 		pieDiameter			: 38,
 		
@@ -133,11 +133,11 @@
 		
 	var loader;
 	
-	if(opts.loader=='pie' && $.browser.msie && $.browser.version < 9){
-		loader = 'bar';
-	} else {
+//	if(opts.loader=='pie' && $.browser.msie && $.browser.version < 9){
+//		loader = 'bar';
+//	} else {
 		loader = opts.loader;
-	}
+//	}
 	
 	if(loader == 'pie'){
 		fakeHover.append(
@@ -155,10 +155,19 @@
 	
 	if(opts.playPause==true){
 		fakeHover.append(
-        '<div class="camera_commands"></div>'
+      //'<div class="camera_commands"></div>'
+
+      // Play and Pause BUG
+      // used to work with previous .live fuction()
+      // new onClick version doesn't work
+      // added divs with class camera_play and camera_stop to DOM to manipulate onClick function
+      // removed from line 1036 if($(commands).length) function
+			'<div class="camera_commands"><div class="camera_play"></div><div class="camera_stop"></div></div>'
 		)
 	}
-		
+	
+
+
 	if(opts.navigation==true){
 		fakeHover.append(
 			'<div class="camera_prev"><span></span></div>'
@@ -210,7 +219,7 @@
 		nextNav = $('.camera_next',wrap),
 		commands = $('.camera_commands',wrap),
 		pagination = $('.camera_pag',wrap),
-		thumbs = $('.camera_thumbs_cont',wrap);	
+		thumbs = $('.camera_thumbs_cont',wrap);
 
 	
 	var w,
@@ -461,7 +470,6 @@
 							t.css({
 								'height' : hT*r,
 								'margin-left' : 0,
-								'margin-right' : 0,
 								'margin-top' : mTop,
 								'position' : 'absolute',
 								'visibility' : 'visible',
@@ -503,7 +511,6 @@
 							t.css({
 								'height' : h,
 								'margin-left' : mLeft,
-								'margin-right' : mLeft,
 								'margin-top' : 0,
 								'position' : 'absolute',
 								'visibility' : 'visible',
@@ -546,7 +553,6 @@
 							t.css({
 								'height' : h,
 								'margin-left' : mLeft,
-								'margin-right' : mLeft,
 								'margin-top' : 0,
 								'position' : 'absolute',
 								'visibility' : 'visible',
@@ -588,7 +594,6 @@
 							t.css({
 								'height' : hT*r,
 								'margin-left' : 0,
-								'margin-right' : 0,
 								'margin-top' : mTop,
 								'position' : 'absolute',
 								'visibility' : 'visible',
@@ -680,6 +685,7 @@
 					t.after($(imgFake).attr({'class':'imgFake','width':w,'height':h}));
 					var clone = t.clone();
 					t.remove();
+
 					$(imgFake).bind('click',function(){
 						if($(this).css('position')=='absolute') {
 							$(this).remove();
@@ -699,8 +705,13 @@
 							clone.attr('src',cloneSrc+autoplay);
 							videoPresent = true;
 						} else {
-							$(this).css({position:'absolute',top:0,left:0,zIndex:10}).after(clone);
-							clone.css({position:'absolute',top:0,left:0,zIndex:9});
+							//$(this).css({position:'absolute',top:0,left:0,zIndex:10}).after(clone);
+							//clone.css({position:'absolute',top:0,left:0,zIndex:9});
+
+							// I did edit these two lines to resize iframe to parent div so it is not in fullscreen mode. - Yamen 1/4/2014
+							$(this).css({position:'absolute',height:'99%',zIndex:10}).width($(this).parent().width()+'%').after(clone); //this is the blank.gif image
+							clone.css({position:'relative',width:'100%',height:'100%',top:0,left:0,zIndex:9}); // this is the iframe
+							autoplay=''; //play on any website
 						}
 					});
 				});
@@ -724,12 +735,12 @@
 			$(nextNav,wrap).animate({opacity:0},0);
 			$(commands,wrap).animate({opacity:0},0);
 			if(isMobile()){
-				fakeHover.live('vmouseover',function(){
+				fakeHover.on('vmouseover',function(){
 					$(prevNav,wrap).animate({opacity:1},200);
 					$(nextNav,wrap).animate({opacity:1},200);
 					$(commands,wrap).animate({opacity:1},200);
 				});
-				fakeHover.live('vmouseout',function(){
+				fakeHover.on('vmouseout',function(){
 					$(prevNav,wrap).delay(500).animate({opacity:0},200);
 					$(nextNav,wrap).delay(500).animate({opacity:0},200);
 					$(commands,wrap).delay(500).animate({opacity:0},200);
@@ -746,13 +757,13 @@
 				});
 			}
 		}
-		
-	
-		$('.camera_stop',camera_thumbs_wrap).live('click',function(){
+
+		$('.camera_commands .camera_stop',camera_thumbs_wrap).on('click',function(){
+			//console.log('camera_stop');
 			autoAdv = false;
 			elem.addClass('paused');
 			if($('.camera_stop',camera_thumbs_wrap).length){
-				$('.camera_stop',camera_thumbs_wrap).hide()
+				$('.camera_stop',camera_thumbs_wrap).hide();
 				$('.camera_play',camera_thumbs_wrap).show();
 				if(loader!='none'){
 					$('#'+pieID).hide();
@@ -763,8 +774,9 @@
 				}
 			}
 		});
-	
-		$('.camera_play',camera_thumbs_wrap).live('click',function(){
+
+		$('.camera_commands .camera_play',camera_thumbs_wrap).on('click',function(){
+			//console.log('camera_play');
 			autoAdv = true;
 			elem.removeClass('paused');
 			if($('.camera_play',camera_thumbs_wrap).length){
@@ -784,7 +796,7 @@
 			$('.camera_target_content',fakeHover).mouseup(function(){
 				autoAdv = false;
 				elem.addClass('paused');
-				$('.camera_stop',camera_thumbs_wrap).hide()
+				$('.camera_stop',camera_thumbs_wrap).hide();
 				$('.camera_play',camera_thumbs_wrap).show();
 				$('#'+pieID).hide();
 			});
@@ -794,13 +806,13 @@
 		},function(){
 			videoHover = false;
 		});
-		
+
 		$('.cameraContent, .imgFake',fakeHover).bind('click',function(){
 			if(videoPresent == true && videoHover == true) {
 				autoAdv = false;
 				$('.camera_caption',fakeHover).hide();
 				elem.addClass('paused');
-				$('.camera_stop',camera_thumbs_wrap).hide()
+				$('.camera_stop',camera_thumbs_wrap).hide();
 				$('.camera_play',camera_thumbs_wrap).show();
 				$('#'+pieID).hide();
 			}
@@ -1015,7 +1027,7 @@
 		}
 
 		if($(commands).length) {
-			$(commands).append('<div class="camera_play"></div>').append('<div class="camera_stop"></div>');
+			//$(commands).append('<div class="camera_play"></div>').append('<div class="camera_stop"></div>');
 			if(autoAdv==true){
 				$('.camera_play',camera_thumbs_wrap).hide();
 				$('.camera_stop',camera_thumbs_wrap).show();
