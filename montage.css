@@ -1,76 +1,12 @@
-@import url('reset.css');
+fieldset,img { 
+	border:0;
+		margin:0;
+	padding:0;
+}
+abbr,acronym { border:0;
+}
 
 /* General Demo Style */
-body{
-	background:#fff;
-	color:#fff;
-	font-family: 'PT Sans Narrow', Arial, sans-serif;
-	font-size:12px;
-}
-a{
-	color:#fff;
-	text-decoration:none;
-}
-.clr{
-	clear:both;
-}
-h1, h5{
-	font-size:40px;
-	font-weight:normal;
-	text-transform:uppercase;
-	font-family:'Monoton', Arial, sans-serif;
-	color:#fff;
-	text-shadow:1px 1px 1px #000;
-	word-spacing:10px;
-	line-height: 40px;
-	padding: 10px 5px 0px 0px;
-}
-h1 span, h5{
-	font-size:18px;
-	color:#c08763;
-	font-family:Georgia, serif;
-	font-style:italic;
-	text-transform:none;
-	word-spacing:0px;
-	white-space: nowrap;
-}
-h2{
-	font-family:Georgia, serif;
-	font-style:italic;
-	padding: 5px 10px 5px 5px;
-	font-size:14px;
-}
-pre{
-	padding:15px;
-	white-space:pre-wrap;
-}
-/* Header Style */
-.header{
-	height:25px;
-	line-height:24px;
-	font-size:13px;
-	background:#000;
-	opacity:0.9;
-	text-transform:uppercase;
-	z-index:4;
-}
-.header a{
-	padding:5px 10px;
-	letter-spacing:1px;
-	text-shadow:1px 1px 1px #000;
-	color:#ddd;
-	text-align:right;
-}
-.header a:hover{
-	color:#fff;
-}
-.header a span{
-	font-weight:bold;
-}
-.header span.right_ab{
-	position:absolute;
-	right:4px;
-}
 .content{
 	position:absolute;
 	top: 75px;
