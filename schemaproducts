@@ -1,0 +1,49 @@
+<script type="application/ld+json">
+{"@context":"http:\/\/schema.org",
+	"@type":"Product",
+		"sku":"mã số sản phẩm",				/*Không có thì điền tên sản phẩm không dấu dính liền giaythethaoultraboost*/
+		"name":"Thông tin sản phẩm + 'Tên sản phẩm' ", /*Thông tin sản phẩm giày thể thao Ultra Boost*/
+		"description":"Mô tả sản phẩm",
+		"image":"url hình ảnh đại diện",
+		"url":"url của sản phẩm",
+		"brand":{
+			"@type":"Brand",
+			"name":"Tên thương hiệu sản phẩm",	/*tên thương hiệu của sản phẩm ví dụ như Nike, Adidas*/
+			"url":"url danh mục sản phẩm"},	/*url danh mục sản phẩm*/
+		"category":"Tên danh mục sản phẩm",	/*Điền tên danh mục sản phẩm chú ý là nên trùng với tên của Breadcrumbs*/
+		"model":{
+			"@type":"ProductModel",
+			"name":"Tên mẫu sản phẩm"},  /*Điền tên sản phẩm*/
+		"depth":{						/*chiều sâu sản phẩm nếu có*/
+			"@type":"QuantitativeValue",
+			"value":"10",				/*giá trị*/
+			"unitCode":"cm"},			/*đơn vị*/
+		"width":{						/*chiều rộng sản phẩm nếu có*/
+			"@type":"QuantitativeValue",
+			"value":"10",				/*giá trị*/
+			"unitCode":"cm"},			/*đơn vị*/
+		"height":{						/*chiều dài sản phẩm nếu có*/
+			"@type":"QuantitativeValue",
+			"value":"10",				/*giá trị*/
+			"unitCode":"cm"},			/*đơn vị*/
+		"weight":{						/*khổi lượng sản phẩm nếu có*/
+			"@type":"QuantitativeValue",
+			"value":"10",
+			"unitCode":"kg"},
+		"aggregateRating":{
+			"@type":"AggregateRating",
+			"worstRating":"1",
+			"bestRating":"5",
+			"ratingValue":5,
+			"ratingCount":1},
+		"review":[{
+			"@type":"Review",
+			"author":"tên khách hàng",		/*tên khách hàng*/
+			"reviewBody":"Dùng rất tốt, dễ sử dụng",	/*đánh giá của khách hàng*/
+			"name":"Năm sao",				/*tên bằng chữ tương ứng với số sao*/
+			"datePublished":"2017-01-01",  /*năm - tháng - ngày đánh giá*/
+			"reviewRating":{
+				"@type":"Rating",
+				"ratingValue":5}}		/*tên bằng chữ tương ứng với giá trị này*/
+				]}
+</script>
